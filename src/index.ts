@@ -1,16 +1,15 @@
 import { EventEmitter } from 'events'
-import Lifecycles from './Enums/Lifecycle'
 
 class Emitter extends EventEmitter {}
 const NodeEmitter = new Emitter()
 
-class Lifecycle<O> {
+class Lifecycle<Options> {
 	public identifier: string
 
-	constructor(identifier: string, options?: O) {
-		this.identifier = identifier
-		NodeEmitter.emit(this.identifier, options)
+	constructor(lifecycle: 'messageReceived' | 'commandReceived' | 'createDiscordClient' | 'starting' | 'commandLoaded' | 'eventLoaded' | 'middlewareLoaded', options?: Options) {
+		this.identifier = lifecycle
+		NodeEmitter.emit(this.identifier.toString(), options)
 	}
 }
 
-export { Lifecycle, Lifecycles, NodeEmitter }
+export { Lifecycle, NodeEmitter }
